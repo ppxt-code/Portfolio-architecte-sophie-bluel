@@ -137,34 +137,34 @@ li:hover {
 	width: 100%;
 
 }
-#contact {
+#contact, #login {
 	width: 50%;
-margin: auto;
+	margin: auto;
 }
-#contact > * {
+#contact > *, #login > * {
 	text-align: center;
 
 }
-#contact h2{
+#contact h2, #login h2 {
 	margin-bottom: 20px;
 }
-#contact form {
+#contact form, #login form {
 	text-align: left;
 	margin-top:30px;
 	display: flex;
 	flex-direction: column;
 }
 
-#contact input {
+#contact input, #login input {
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
-#contact label {
+#contact label, #login label {
 	margin: 2em 0 1em 0;
 }
-#contact textarea {
+#contact textarea	, #login textarea {
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
@@ -216,4 +216,30 @@ footer nav ul {
 header nav ul li img {
 	width: 22px;
 	height: 22px;
+}
+
+/* forgot-password dans login.html */
+#forgot-password {
+	text-align: center;
+	margin : 0;
+}
+#forgot-password a {
+	font-size: 14px;
+	color: black;
+}
+
+/* pour pousser le footer vers le bas */
+body {
+  min-height: 100vh;          
+  display: flex;              
+  flex-direction: column;     
+}
+main {
+  flex-grow: 1;          
+}
+
+/* pour les liens du header */
+nav ul li a {
+	text-decoration: none;
+	color: black;
 }
