@@ -26,6 +26,8 @@ async function displayProjects(idCategory) {
 }
 
 async function displayCategories() {
+    if (localStorage.getItem("userId"))  return;
+
     const categories = await fetchData("categories");
     const categoryDiv = document.querySelector('.categories');
     categoryDiv.innerHTML = ""; // vider la div avant d'ajouter de nouveaux boutons
@@ -65,4 +67,9 @@ function removeClickedButtons() {
 }
 
 await displayCategories();
-//await displayProjects();
+
+document.addEventListener('DOMContentLoaded', async () => {
+    if (localStorage.getItem("userId")) {
+        await displayProjects(0);
+    }
+});
