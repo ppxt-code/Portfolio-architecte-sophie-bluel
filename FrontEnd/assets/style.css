@@ -211,3 +211,9 @@ footer nav ul {
 	color : white;
 	background-color: #1D6154;
 }
+
+/* header */
+header nav ul li img {
+	width: 22px;
+	height: 22px;
+}
