@@ -279,7 +279,7 @@ nav ul li a {
 	display: flex;
 	justify-content: flex-end;
 }
-#modal form div i.fa-xmark {
+#modal form div i.fa-xmark, #modal form div i.fa-arrow-left {
 	font-size: 24px;
 }
 #modal form nav {
@@ -347,4 +347,8 @@ nav ul li a {
 }
 .backgroundgrey {
 	background-color: #0000004D;
+}
+#div-backandclose {
+	display:flex;
+	justify-content: space-between;
 }
