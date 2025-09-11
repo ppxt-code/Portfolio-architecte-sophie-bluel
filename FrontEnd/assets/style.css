@@ -266,3 +266,85 @@ nav ul li a {
 	color: black;
 	text-decoration: none;
 }
+
+/* Pour les projets dans la modale */
+#modal {
+	width:630px;
+	height:688px;
+	border-radius: 10px;
+	border-color : transparent;
+	padding:30px 30px;
+}
+#div-close {
+	display: flex;
+	justify-content: flex-end;
+}
+#modal form div i.fa-xmark {
+	font-size: 24px;
+}
+#modal form nav {
+	font-family: 'Work Sans' ;
+	font-size: 26px;
+	font-weight: 400;
+	color:#000000;
+	text-align: center;
+	margin-bottom: 50px;
+}
+.gallery-for-modal {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	gap:10px;
+	row-gap: 30px;
+	padding: 0px 80px;
+}
+.gallery-for-modal figure {
+	position: relative;
+	width: 100%;
+}
+
+.gallery-for-modal figure img {
+	max-width: 100%;
+	max-height: 100%;
+	object-fit: contain;
+}
+
+.gallery-for-modal figure i.fa-trash-can {
+	position: absolute;
+	/* positionnement absolu par rapport à figure */
+	top: 10px;
+	right: 10px;
+	color: white;
+	cursor: pointer;
+	height: 17px;
+	width: 17px;
+	background: black;
+	border-radius: 4px;
+	/* bords arrondis */
+	padding: 5px 5px;
+	z-index: 10;
+	/* au-dessus de l’image */
+	display: flex;
+	/* flex centering */
+	justify-content: center;
+	align-items: center;
+}
+#modal hr {
+	margin : 60px 80px 40px;
+}
+#addImgButton {
+	border-radius: 60px;
+	background-color: #1D6154;
+	color:white;
+	width: 237px;
+	height: 36px;
+	font-size: 14px;
+	font-weight: 700;
+	font-family: 'Syne';
+}
+#div-add-image {
+	display:flex;
+	justify-content: center;
+}
+.backgroundgrey {
+	background-color: #0000004D;
+}

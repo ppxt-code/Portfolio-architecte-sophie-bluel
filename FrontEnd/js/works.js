@@ -1,3 +1,4 @@
+
 //récupération des projets via l'API
 async function fetchData(dataname) {
 	const response = await fetch("http://localhost:5678/api"+"/"+dataname);
@@ -8,7 +9,7 @@ async function fetchData(dataname) {
 // affichage dynamique des projets
 async function displayProjects(idCategory) {
     const projects = await fetchData("works");
-    const gallery = document.querySelector('.gallery');
+    const gallery = document.querySelector(".gallery");
     gallery.innerHTML = ""; // vider la galerie avant d'ajouter de nouveaux projets
     // filtrer les projets par catégorie si une catégorie est sélectionnée
     let filteredProjects = (idCategory> 0) ? projects.filter(p => p.categoryId == idCategory) : projects;
@@ -21,6 +22,24 @@ async function displayProjects(idCategory) {
         figcaption.textContent = project.title;
         figure.appendChild(img);
         figure.appendChild(figcaption);
+        gallery.appendChild(figure);
+    }
+}
+
+export async function displayProjectsForModule() {
+    const projects = await fetchData("works");
+    const gallery = document.querySelector(".gallery-for-modal");
+    gallery.innerHTML = ""; // vider la galerie avant d'ajouter de nouveaux projets
+    // filtrer les projets par catégorie si une catégorie est sélectionnée
+    for (const project of projects) {
+        const figure = document.createElement("figure");
+        const img = document.createElement("img");
+        const icone = document.createElement("i");
+        icone.className = "fa-solid fa-trash-can";
+        img.src = project.imageUrl;
+        img.alt = project.title;
+        figure.appendChild(img);
+        figure.appendChild(icone);
         gallery.appendChild(figure);
     }
 }
@@ -65,6 +84,8 @@ function removeClickedButtons() {
         button.classList.remove("clicked");
     });
 }
+
+
 
 await displayCategories();
 

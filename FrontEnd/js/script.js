@@ -1,3 +1,4 @@
+import { initModal } from "./modal.js";
 
 // insère header.html dans <header> de la page dynamiquement
 // ie dans les pages index.html et login.html
@@ -44,6 +45,10 @@ function updateProjectsHeaderConnected() {
         aLink.href = "#";
         aLink.id = "modif-a";
         portfolioHeader.appendChild(aLink);
+        aLink.addEventListener("click", async function(event) {
+            event.preventDefault();
+            await initModal();
+        });
     }
 }
 document.addEventListener('DOMContentLoaded', async () => {
