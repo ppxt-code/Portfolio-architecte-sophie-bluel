@@ -44,12 +44,23 @@ function addEventOnAddButton() {
     });
 }
 function addEventOnAddPhoto() {
-  document.getElementById("div-add-image").addEventListener("change", function(e) {
-    const file = e.target.files[0];
-    if (file && file.size > 4 * 1024 * 1024) { // 4 Mo en octets
-      alert("Le fichier ne doit pas dépasser 4 Mo.");
-      e.target.value = "";
-    }
+    document.getElementById("add-photo").addEventListener("change", function(e) {
+        const file = e.target.files[0];
+        if (file && file.size > 4 * 1024 * 1024) { // 4 Mo en octets
+            alert("Le fichier ne doit pas dépasser 4 Mo.");
+            e.target.value = "";
+        }
+        if (file) {
+            const img = document.createElement("img");
+            img.src = URL.createObjectURL(file); // Crée URL temporaire affichable
+            img.alt = "Aperçu de l'image sélectionnée";
+            img.id =  "downloadee";
+            const div = document.getElementById("div-add-photo");
+            div.innerHTML = ""; 
+            div.appendChild(img);
+            // Optionnel : libérer l’URL après chargement pour économiser la mémoire
+            //img.onload = () => URL.revokeObjectURL(img.src);
+        }
   });
 
 }

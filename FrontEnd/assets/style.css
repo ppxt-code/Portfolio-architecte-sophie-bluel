@@ -329,7 +329,7 @@ nav ul li a {
 	align-items: center;
 }
 #modal hr {
-	margin : 60px 80px 40px;
+	margin : 60px 105px 40px;
 	color: #B3B3B3;
 }
 #addImgButton {
@@ -359,16 +359,18 @@ nav ul li a {
 	display:flex;
 	flex-direction: column;
 	justify-content: center;
-	align-items:center;
+	align-items: center;
 	background-color: #E8F1F6;
-	margin : 0 80px;
+	margin : 0 105px;
 	border-radius: 3px;
-	padding: 20px 0 25px;
+	/*padding: 20px 0 25px;*/
+	height:169px;
+	width: 420px;
 }
 #button-add-photo {
 	display:flex;
 	justify-content: center;
-	align-items:center;
+	align-items: center;
 	width: 173px;
 	height: 36px;
 	background-color:#CBD6DC;
@@ -385,6 +387,14 @@ nav ul li a {
 	width: 76px;
 	height: 76px;
 }
+#div-add-photo #downloadee {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  /* Pour forcer un des côtés à toucher le bord */
+  display: block;
+}
 #div-add-photo p {
 	font-family: 'Work Sans' ;
 	font-size: 10px;
@@ -394,7 +404,7 @@ nav ul li a {
 #div-add-photo-infos {
 	display: flex;
 	flex-direction: column;
-	margin : 0 80px;
+	margin : 0 105px;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
 	font-weight: 500;
@@ -409,6 +419,9 @@ nav ul li a {
 #div-add-photo-infos label {
 	margin: 30px 0 20px;
 }
+#div-add-photo-infos input {
+	padding-left: 15px;
+}
 #addImgButton.background-gray {
 	background-color: #A7A7A7;
 	color:white;
@@ -422,6 +435,7 @@ nav ul li a {
 }
 .custom-select select {
   appearance: none;
+  outline: none;
 }
 .custom-select::after {
   content: "";
