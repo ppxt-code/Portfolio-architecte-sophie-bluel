@@ -33,11 +33,22 @@ function handleCloseClick() {
 //
 function addEventOnAddButton() {
     const addImgButton = document.querySelector("#div-add-image button");
-    addImgButton.addEventListener("click", () => {
-        initModalPhoto();
+    addImgButton.addEventListener("click", async () => {
+        await initModalPhoto();
     });
 }
-export async function  initModal() {
+function addEventOnAddPhoto() {
+  document.getElementById("div-add-image").addEventListener("change", function(e) {
+    const file = e.target.files[0];
+    if (file && file.size > 4 * 1024 * 1024) { // 4 Mo en octets
+      alert("Le fichier ne doit pas dépasser 4 Mo.");
+      e.target.value = "";
+    }
+  });
+
+}
+//
+export async function initModal() {
     // création de la boîte de dialogue modale :
     const body = document.querySelector("body");
     const dialog = document.createElement("dialog");
@@ -85,52 +96,29 @@ export async function  initModal() {
     body.classList.add("backgroundgrey");
 }
 
-function initModalPhoto() {
+// insère modaleAddPhoto.html dans <dialog> de la page dynamiquement
+async function loadmodaleAddPhoto() {
+    const response = await fetch("modaleAddPhoto.html");
+    const data = await response.text();
+    document.querySelector("dialog").innerHTML = data;
+}
+async function initModalPhoto() {
     const body = document.querySelector("body");
     // on vide l'ancienne modale :
     let dialog = document.querySelector("dialog");
-    body.removeChild(dialog);
+    dialog.innerHTML = "";
+ //   body.removeChild(dialog);
 
-    // création de la boîte de dialogue modale :
-    dialog = document.createElement("dialog");
-    dialog.id = "modal";
-    const form = document.createElement("form");
-    form.method = "dialog";
-    // bouton de fermeture et flèche gauche
-    const closeDiv = document.createElement("div");
-    closeDiv.id="div-backandclose";
-    const backButton = document.createElement("i");
-    backButton.className="fa-solid fa-arrow-left";
-    closeDiv.appendChild(backButton);
-    const closeButton = document.createElement("i");
-    closeButton.className="fa-solid fa-xmark";
-    closeDiv.appendChild(closeButton)
-    form.appendChild(closeDiv);
-    // titre
-    const title = document.createElement("nav");
-    title.innerText = "Ajout photo";
-    form.appendChild(title);
-    // rubrique d'ajout de photo
-
-    // ligne de séparation
-    const line = document.createElement("hr");
-    form.appendChild(line);
-    // button pour ajouter une image
-    const divaddImg = document.createElement("div");
-    divaddImg.id = "div-add-image";
-    const addImgButton = document.createElement("button");
-    addImgButton.id = "addImgButton";
-    addImgButton.innerText = "Valider";
-    divaddImg.appendChild(addImgButton);
-    form.appendChild(divaddImg);
-
-    dialog.appendChild(form);
+    // insertion de modaleAddPhoto.html
+ //   dialog = document.createElement("dialog");
+ //   dialog.id = "modal";
+    await loadmodaleAddPhoto();
     body.appendChild(dialog);
 
     // ajout des evenements
     addEventOnCloseModal();
-
+    addEventOnAddPhoto();
     // affichage de la boîte de dialogue modale
-    dialog.showModal();
+ //   dialog.showModal();
 
 }

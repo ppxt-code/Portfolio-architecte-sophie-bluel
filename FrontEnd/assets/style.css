@@ -330,6 +330,7 @@ nav ul li a {
 }
 #modal hr {
 	margin : 60px 80px 40px;
+	color: #B3B3B3;
 }
 #addImgButton {
 	border-radius: 60px;
@@ -348,7 +349,89 @@ nav ul li a {
 .backgroundgrey {
 	background-color: #0000004D;
 }
+
+/********************** modale add photo *********************/
 #div-backandclose {
 	display:flex;
 	justify-content: space-between;
+}
+#div-add-photo {
+	display:flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items:center;
+	background-color: #E8F1F6;
+	margin : 0 80px;
+	border-radius: 3px;
+	padding: 20px 0 25px;
+}
+#button-add-photo {
+	display:flex;
+	justify-content: center;
+	align-items:center;
+	width: 173px;
+	height: 36px;
+	background-color:#CBD6DC;
+	color: #306685;
+	border-radius: 50px;
+	margin-top: 5px;
+}
+#button-add-photo label {
+	font-family: 'Work Sans' ;
+	font-size: 14px;
+	font-weight: 500;
+}
+#div-add-photo img {
+	width: 76px;
+	height: 76px;
+}
+#div-add-photo p {
+	font-family: 'Work Sans' ;
+	font-size: 10px;
+	font-weight: 400;
+	margin-top: 8px;
+}
+#div-add-photo-infos {
+	display: flex;
+	flex-direction: column;
+	margin : 0 80px;
+	font-family: 'Work Sans' ;
+	font-size: 14px;
+	font-weight: 500;
+}
+#div-add-photo-infos input, #div-add-photo-infos select {
+	flex: 1;
+	height: 51px;
+    min-height: 51px;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+#div-add-photo-infos label {
+	margin: 30px 0 20px;
+}
+#addImgButton.background-gray {
+	background-color: #A7A7A7;
+	color:white;
+	border: none;
+}
+/* customisation du select*/
+.custom-select {
+  position: relative;
+  display: inline-block;
+}
+.custom-select select {
+  appearance: none;
+  padding-right: 470px;
+}
+.custom-select::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%); /* centre verticalement l'icône */
+  right: 40px; /* position à ajuster */
+  width: 11.18px;
+  height: 11.18px;
+  background: url("./icons/arrow.png") no-repeat center;
+  background-size: contain; /*pour contrôler la taille de l’image d’arrière-plan*/
+  pointer-events: none; /*la flèche est décorative: évite que la flèche gêne le clic ou la sélection*/
 }
