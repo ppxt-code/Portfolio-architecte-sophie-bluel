@@ -1,4 +1,4 @@
-import { displayProjectsForModule } from "./works.js";
+import { displayProjectsForModule, fetchData } from "./works.js";
 
 // evenements sur le close de la modale :
 function addEventOnCloseModal() {
@@ -31,6 +31,12 @@ function handleCloseClick() {
     document.removeEventListener("click", outsideClickListener);
 }
 //
+function addEventOnLeftArrow() {
+    const leftArrow = document.querySelector(".fa-arrow-left");
+    leftArrow.addEventListener("click", async () => {
+        await initModal();
+    });
+}
 function addEventOnAddButton() {
     const addImgButton = document.querySelector("#div-add-image button");
     addImgButton.addEventListener("click", async () => {
@@ -51,8 +57,13 @@ function addEventOnAddPhoto() {
 export async function initModal() {
     // création de la boîte de dialogue modale :
     const body = document.querySelector("body");
-    const dialog = document.createElement("dialog");
-    dialog.id = "modal";
+    let dialog = document.querySelector("dialog");
+    if (dialog !== null) {
+        dialog.innerHTML = ""; // on vide
+    } else {
+        dialog = document.createElement("dialog");
+        dialog.id = "modal";
+    }
     const form = document.createElement("form");
     form.method = "dialog";
     // bouton de fermeture
@@ -102,20 +113,38 @@ async function loadmodaleAddPhoto() {
     const data = await response.text();
     document.querySelector("dialog").innerHTML = data;
 }
+async function fillCategories() {
+    const select = document.getElementById("categorie");
+    const categories = await fetchData("categories");
+    // option vide
+    let option = document.createElement("option");
+    option.value = -1;
+    option.textContent = "";
+    select.appendChild(option);
+    //
+    for (const category of categories) {
+        option = document.createElement("option");
+        option.value = category.id;
+        // echec de padding-left et de text-indent dans le css
+        option.textContent = "\u00A0\u00A0\u00A0\u00A0"+category.name;
+        select.appendChild(option);
+    }
+}
 async function initModalPhoto() {
     const body = document.querySelector("body");
     // on vide l'ancienne modale :
     let dialog = document.querySelector("dialog");
     dialog.innerHTML = "";
- //   body.removeChild(dialog);
 
     // insertion de modaleAddPhoto.html
- //   dialog = document.createElement("dialog");
- //   dialog.id = "modal";
     await loadmodaleAddPhoto();
     body.appendChild(dialog);
 
+    // ajout des catégories
+    await fillCategories();
+
     // ajout des evenements
+    addEventOnLeftArrow();
     addEventOnCloseModal();
     addEventOnAddPhoto();
     // affichage de la boîte de dialogue modale

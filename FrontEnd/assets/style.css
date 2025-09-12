@@ -416,12 +416,12 @@ nav ul li a {
 }
 /* customisation du select*/
 .custom-select {
-  position: relative;
-  display: inline-block;
+  	position: relative;
+  	/*display: inline-block;*/
+	display:flex;
 }
 .custom-select select {
   appearance: none;
-  padding-right: 470px;
 }
 .custom-select::after {
   content: "";
