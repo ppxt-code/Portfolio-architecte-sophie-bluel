@@ -28,7 +28,7 @@ function handleCloseClick() {
     dialog.close();
     body.removeChild(dialog);
     body.classList.remove("backgroundgrey");
-    body.removeEventListener("click", outsideClickListener);
+    document.removeEventListener("click", outsideClickListener);
 }
 //
 function addEventOnAddButton() {
