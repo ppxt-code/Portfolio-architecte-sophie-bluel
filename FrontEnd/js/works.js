@@ -2,6 +2,10 @@
 //récupération des projets via l'API
 export async function fetchData(dataname) {
 	const response = await fetch("http://localhost:5678/api"+"/"+dataname);
+    if (!response.ok) {
+        console.error(`Erreur HTTP ! statut: ${response.status} on get ${dataname}`);
+        return null;
+    }
 	const data = await response.json();
 	return data;
 }
@@ -18,8 +22,7 @@ export async function deleteData(id) {
     if (!response.ok) {
         console.error(`Erreur HTTP ! statut: ${response.status} on delete project ${id}`);
     } else {
-        console.log(`Succès statut: ${response.status} on delete project ${id}`);
-        deleted = true;
+       deleted = true;
     }
     return deleted;
 }
@@ -27,23 +30,27 @@ export async function deleteData(id) {
 export async function postData(title, imageUrl, categoryId) {
     const token = window.localStorage.getItem("token");
     const categoryIdInt = parseInt(categoryId, 10);
-    const data = {
-        "image": imageUrl,
-        "title": title,
-        "category": categoryIdInt
-    };
+    // recuperer une File
+    const blob = await fetch(imageUrl).then(res => res.blob());
+    const file = new File([blob], "filename.png", { type: blob.type });
+
+    const formData = new FormData();
+    formData.append("image", file);
+    formData.append("title", title);
+    formData.append("category", categoryIdInt);
+  
     const response = await fetch("http://localhost:5678/api"+"/"+"works", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`
         },
-        body: JSON.stringify(data)
+        body: formData
     });
     if (!response.ok) {
         console.error(`Erreur HTTP ! statut: ${response.status} on post ${title}`);
+        return false;
     } else {
-        console.log(`Succès statut: ${response.status} on post ${title}`);
+        return true;
     }
 }
 
@@ -70,7 +77,7 @@ export async function displayProjects(idCategory) {
 
 export async function displayProjectsForModal() {
     const projects = await fetchData("works");
-    const gallery = document.querySelector(".gallery-for-modal");
+    let gallery = document.querySelector(".gallery-for-modal");
     gallery.innerHTML = ""; // vider la galerie avant d'ajouter de nouveaux projets
     // filtrer les projets par catégorie si une catégorie est sélectionnée
     for (const project of projects) {

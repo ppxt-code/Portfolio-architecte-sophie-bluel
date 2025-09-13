@@ -270,7 +270,7 @@ nav ul li a {
 /* Pour les projets dans la modale */
 #modal {
 	width:630px;
-	height:688px;
+/*	height:688px;*/
 	border-radius: 10px;
 	border-color : transparent;
 	padding:30px 30px;

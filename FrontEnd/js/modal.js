@@ -2,10 +2,9 @@ import { displayProjects, displayProjectsForModal, fetchData, postData, deleteDa
 
 // evenements sur le close de la modale :
 function addEventOnCloseModal() {
-    const body = document.querySelector("body");
     const closeButton = document.querySelector("i.fa-xmark");
     closeButton.addEventListener("click", handleCloseClick);
-    // Clic sur body (hors modale)
+    // Clic sur document (hors modale)
     document.addEventListener("click", outsideClickListener);
 }
 function outsideClickListener(event) {
@@ -18,16 +17,14 @@ function outsideClickListener(event) {
         || y < rect.top || y > rect.bottom);
     if (dialog && isOutside) {//!dialog.contains(event.target)) {
         handleCloseClick();
-        const body = document.querySelector("body");
         document.removeEventListener("click", outsideClickListener);
     }
 }
 function handleCloseClick() {
-    const body = document.querySelector("body");
     const dialog = document.querySelector("#modal");
     dialog.close();
-    body.removeChild(dialog);
-    body.classList.remove("backgroundgrey");
+    document.body.removeChild(dialog);
+    document.body.classList.remove("backgroundgrey");
     document.removeEventListener("click", outsideClickListener);
 }
 // evenement dans la fenetre modale "Ajout Photo" sur la flèche gauche
@@ -111,14 +108,19 @@ function addEventOnValidate() {
         const img = document.getElementById("downloadee");
         const title = document.getElementById("titre");
         const category = document.getElementById("categorie");
-        await postData(title.value, img.src, category.value);
+        const posted = await postData(title.value, img.src, category.value);
+        if (posted) {
+            // mettre à jour les projets dans la modale
+            await initModalPhoto();
+            // mettre à jour les projets dans la page principale 
+            await displayProjects(0);
+        }
     });
 }
 
 // creation de la fenetre modale "Galerie photo"
 export async function initModal() {
     // création de la boîte de dialogue modale :
-    const body = document.querySelector("body");
     let dialog = document.querySelector("dialog");
     if (dialog !== null) {
         dialog.innerHTML = ""; // on vide
@@ -144,7 +146,7 @@ export async function initModal() {
     divGallery.classList.add("gallery-for-modal");
     form.appendChild(divGallery);
     dialog.appendChild(form);
-    body.appendChild(dialog);
+    document.body.appendChild(dialog);
     // affichage des projets dans gallery-for-modal
     await displayProjectsForModal();
     // ligne de séparation
@@ -167,7 +169,7 @@ export async function initModal() {
     // affichage de la boîte de dialogue modale
     if (!dialog.open) dialog.showModal();
     // affichage du fond en grisé
-    body.classList.add("backgroundgrey");
+    document.body.classList.add("backgroundgrey");
 }
 
 // insère modaleAddPhoto.html dans <dialog> de la page dynamiquement
@@ -195,14 +197,13 @@ async function fillCategories() {
 }
 // creation de la fenetre modale "Ajout photo"
 async function initModalPhoto() {
-    const body = document.querySelector("body");
     // on vide l'ancienne modale :
     let dialog = document.querySelector("dialog");
     dialog.innerHTML = "";
 
     // insertion de modaleAddPhoto.html
     await loadmodaleAddPhoto();
-    body.appendChild(dialog);
+    document.body.appendChild(dialog);
 
     // ajout des catégories
     await fillCategories();
@@ -213,4 +214,6 @@ async function initModalPhoto() {
     addEventOnAddPhoto();
     addEventOnAddPhotoInfo();
     addEventOnValidate();
+
+    if (!dialog.open) dialog.showModal();
 }
