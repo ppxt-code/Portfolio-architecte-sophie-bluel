@@ -30,19 +30,21 @@ function handleCloseClick() {
     body.classList.remove("backgroundgrey");
     document.removeEventListener("click", outsideClickListener);
 }
-//
+// evenement dans la fenetre modale "Ajout Photo" sur la flèche gauche
 function addEventOnLeftArrow() {
     const leftArrow = document.querySelector(".fa-arrow-left");
     leftArrow.addEventListener("click", async () => {
         await initModal();
     });
 }
+// evenement sur le bouton [Ajouter une photo] dans la fenetre modale "Galerie Photo"
 function addEventOnAddButton() {
     const addImgButton = document.querySelector("#div-add-image button");
     addImgButton.addEventListener("click", async () => {
         await initModalPhoto();
     });
 }
+// evenement sur l'ajout d'une photo dans la fenetre modale "Ajout Photo"
 function addEventOnAddPhoto() {
     document.getElementById("add-photo").addEventListener("change", function(e) {
         const file = e.target.files[0];
@@ -58,11 +60,33 @@ function addEventOnAddPhoto() {
             const div = document.getElementById("div-add-photo");
             div.innerHTML = ""; 
             div.appendChild(img);
-            // Optionnel : libérer l’URL après chargement pour économiser la mémoire
-            //img.onload = () => URL.revokeObjectURL(img.src);
+            // libérer l’URL après chargement pour économiser la mémoire
+            img.onload = () => URL.revokeObjectURL(img.src);
+            //
+            checkPhotoInfoFilled();
         }
   });
-
+}
+// evenement sur Titre et Catégorie de la fenetre modale "Ajout Photo"
+function addEventOnAddPhotoInfo() {
+    const title = document.getElementById("titre");
+    title.addEventListener("change", () => {checkPhotoInfoFilled();});
+    const category = document.getElementById("categorie");
+    category.addEventListener("change", () => {checkPhotoInfoFilled();});
+}
+// verifie que le formulaire est complet et reactive le bouton addImgButton si c'est le cas
+function checkPhotoInfoFilled() {
+    const img = document.getElementById("downloadee");
+    const hasimg = (img!==null) && (img.src!==null);
+    const title = document.getElementById("titre");
+    const hasTitle = (title!==null) && (title.value!==null) && (title.value.trim()!=="");
+    const category = document.getElementById("categorie");
+    const hascategory = (category!==null) && (category.value > 0);
+    if (hasimg && hasTitle && hascategory) {
+        const button = document.getElementById("addImgButton");
+        button.classList.remove("background-gray");
+        button.disabled = false;
+    }
 }
 //
 export async function initModal() {
@@ -158,6 +182,7 @@ async function initModalPhoto() {
     addEventOnLeftArrow();
     addEventOnCloseModal();
     addEventOnAddPhoto();
+    addEventOnAddPhotoInfo()
     // affichage de la boîte de dialogue modale
  //   dialog.showModal();
 
