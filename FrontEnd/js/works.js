@@ -5,9 +5,51 @@ export async function fetchData(dataname) {
 	const data = await response.json();
 	return data;
 }
+export async function deleteData(id) {
+    const token = window.localStorage.getItem("token");
+    let deleted = false;
+    const response = await fetch("http://localhost:5678/api"+"/"+"works/"+id, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+    })
+    if (!response.ok) {
+        console.error(`Erreur HTTP ! statut: ${response.status} on delete project ${id}`);
+    } else {
+        console.log(`Succès statut: ${response.status} on delete project ${id}`);
+        deleted = true;
+    }
+    return deleted;
+}
+// post des images via l'API
+export async function postData(title, imageUrl, categoryId) {
+    const token = window.localStorage.getItem("token");
+    const categoryIdInt = parseInt(categoryId, 10);
+    const data = {
+        "image": imageUrl,
+        "title": title,
+        "category": categoryIdInt
+    };
+    const response = await fetch("http://localhost:5678/api"+"/"+"works", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(data)
+    });
+    if (!response.ok) {
+        console.error(`Erreur HTTP ! statut: ${response.status} on post ${title}`);
+    } else {
+        console.log(`Succès statut: ${response.status} on post ${title}`);
+    }
+}
+
 
 // affichage dynamique des projets
-async function displayProjects(idCategory) {
+export async function displayProjects(idCategory) {
     const projects = await fetchData("works");
     const gallery = document.querySelector(".gallery");
     gallery.innerHTML = ""; // vider la galerie avant d'ajouter de nouveaux projets
@@ -26,7 +68,7 @@ async function displayProjects(idCategory) {
     }
 }
 
-export async function displayProjectsForModule() {
+export async function displayProjectsForModal() {
     const projects = await fetchData("works");
     const gallery = document.querySelector(".gallery-for-modal");
     gallery.innerHTML = ""; // vider la galerie avant d'ajouter de nouveaux projets
@@ -36,6 +78,7 @@ export async function displayProjectsForModule() {
         const img = document.createElement("img");
         const icone = document.createElement("i");
         icone.className = "fa-solid fa-trash-can";
+        icone.dataset.id = project.id; 
         img.src = project.imageUrl;
         img.alt = project.title;
         figure.appendChild(img);

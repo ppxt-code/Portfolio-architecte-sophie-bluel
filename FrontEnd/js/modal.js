@@ -1,4 +1,4 @@
-import { displayProjectsForModule, fetchData } from "./works.js";
+import { displayProjects, displayProjectsForModal, fetchData, postData, deleteData} from "./works.js";
 
 // evenements sur le close de la modale :
 function addEventOnCloseModal() {
@@ -37,6 +37,22 @@ function addEventOnLeftArrow() {
         await initModal();
     });
 }
+// evenements sur les corbeilles sur images dans la gallerie de la fenetre modale "Galerie Photo"
+function addEventonDelete() {
+    const bins = document.querySelectorAll(".gallery-for-modal figure i.fa-trash-can");
+    for (const bin of bins) {
+        const id = bin.dataset.id;
+        bin.addEventListener("click", async () => {
+            const deleted = await deleteData(id);
+            if (deleted) {
+                // mettre à jour les projets dans la modale
+                await initModal();
+                // mettre à jour les projets dans la page principale 
+                await displayProjects(0);
+            }
+        });
+    }
+}
 // evenement sur le bouton [Ajouter une photo] dans la fenetre modale "Galerie Photo"
 function addEventOnAddButton() {
     const addImgButton = document.querySelector("#div-add-image button");
@@ -61,7 +77,7 @@ function addEventOnAddPhoto() {
             div.innerHTML = ""; 
             div.appendChild(img);
             // libérer l’URL après chargement pour économiser la mémoire
-            img.onload = () => URL.revokeObjectURL(img.src);
+            //img.onload = () => URL.revokeObjectURL(img.src);
             //
             checkPhotoInfoFilled();
         }
@@ -88,7 +104,18 @@ function checkPhotoInfoFilled() {
         button.disabled = false;
     }
 }
-//
+// evenement sur le bouton [Valider] de la fenetre modale "Ajout photo"
+function addEventOnValidate() {
+    const button = document.getElementById("addImgButton");
+    button.addEventListener("click", async () => {
+        const img = document.getElementById("downloadee");
+        const title = document.getElementById("titre");
+        const category = document.getElementById("categorie");
+        await postData(title.value, img.src, category.value);
+    });
+}
+
+// creation de la fenetre modale "Galerie photo"
 export async function initModal() {
     // création de la boîte de dialogue modale :
     const body = document.querySelector("body");
@@ -118,8 +145,8 @@ export async function initModal() {
     form.appendChild(divGallery);
     dialog.appendChild(form);
     body.appendChild(dialog);
-    // affichage des projets dans gallery
-    await displayProjectsForModule();
+    // affichage des projets dans gallery-for-modal
+    await displayProjectsForModal();
     // ligne de séparation
     const line = document.createElement("hr");
     form.appendChild(line);
@@ -133,11 +160,12 @@ export async function initModal() {
     form.appendChild(divaddImg);
     // ajout des evenements 
     addEventOnCloseModal();
+    addEventonDelete();
     addEventOnAddButton();
     // TODO les evenements de delete
 
     // affichage de la boîte de dialogue modale
-    dialog.showModal();
+    if (!dialog.open) dialog.showModal();
     // affichage du fond en grisé
     body.classList.add("backgroundgrey");
 }
@@ -165,6 +193,7 @@ async function fillCategories() {
         select.appendChild(option);
     }
 }
+// creation de la fenetre modale "Ajout photo"
 async function initModalPhoto() {
     const body = document.querySelector("body");
     // on vide l'ancienne modale :
@@ -182,8 +211,6 @@ async function initModalPhoto() {
     addEventOnLeftArrow();
     addEventOnCloseModal();
     addEventOnAddPhoto();
-    addEventOnAddPhotoInfo()
-    // affichage de la boîte de dialogue modale
- //   dialog.showModal();
-
+    addEventOnAddPhotoInfo();
+    addEventOnValidate();
 }
