@@ -2,14 +2,14 @@ import { initModal } from "./modal.js";
 
 // insère header.html dans <header> de la page dynamiquement
 // ie dans les pages index.html et login.html
-async function loadHeader() {
+export async function loadHeader() {
     const response = await fetch("header.html");
     const data = await response.text();
     document.querySelector("header").innerHTML = data;
 }
 // modifie le lien "login" en "logout" dans le header si l'utilisateur est connecté
 // enleve le lien de modification des projets, efface le token et userId dans localStorage
-function updateHeaderConnected() {
+export function updateHeaderConnected() {
     if (localStorage.getItem("userId")) {
         let alogin = document.getElementById("alogin");
         alogin.textContent = "logout";
@@ -51,8 +51,6 @@ function updateProjectsHeaderConnected() {
         });
     }
 }
-document.addEventListener('DOMContentLoaded', async () => {
-    await loadHeader();
-    updateHeaderConnected();
-    updateProjectsHeaderConnected();
-});
+await loadHeader();
+updateHeaderConnected();
+updateProjectsHeaderConnected();

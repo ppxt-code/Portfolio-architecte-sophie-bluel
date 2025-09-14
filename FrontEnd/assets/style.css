@@ -154,6 +154,9 @@ li:hover {
 	display: flex;
 	flex-direction: column;
 }
+#email, #password {
+	padding-left: 15px;
+}
 
 #contact input, #login input {
 	height: 50px;

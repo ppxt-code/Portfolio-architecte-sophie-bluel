@@ -57,8 +57,9 @@ export async function postData(title, imageUrl, categoryId) {
 
 // affichage dynamique des projets
 export async function displayProjects(idCategory) {
-    const projects = await fetchData("works");
     const gallery = document.querySelector(".gallery");
+    if (gallery === null) return;
+    const projects = await fetchData("works");
     gallery.innerHTML = ""; // vider la galerie avant d'ajouter de nouveaux projets
     // filtrer les projets par catégorie si une catégorie est sélectionnée
     let filteredProjects = (idCategory> 0) ? projects.filter(p => p.categoryId == idCategory) : projects;
@@ -97,8 +98,9 @@ export async function displayProjectsForModal() {
 async function displayCategories() {
     if (localStorage.getItem("userId"))  return;
 
-    const categories = await fetchData("categories");
     const categoryDiv = document.querySelector('.categories');
+    if (categoryDiv === null) return;
+    const categories = await fetchData("categories");
     categoryDiv.innerHTML = ""; // vider la div avant d'ajouter de nouveaux boutons
     // ajout du bouton "Tous" avec data-id 0
     let button = document.createElement("button");

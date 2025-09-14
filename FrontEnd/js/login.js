@@ -1,7 +1,11 @@
+import {loadHeader, updateHeaderConnected} from "./script.js"
+
 // envoi du formulaire de login on POST /api/users/login
 function submitLogin() {
-    const submit = document.getElementById("submit");
-    submit.addEventListener("click", async (event) => {
+    /*const submit = document.getElementById("submit");
+    submit.addEventListener("click", async (event) => {*/
+    const form = document.querySelector("#login form");
+    form.addEventListener("submit", async (event) => {
         event.preventDefault();
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
@@ -35,6 +39,5 @@ async function responseOk(response) {
     // redirection vers index.html
     window.location.href = "./index.html";
 }
-document.addEventListener('DOMContentLoaded', () => {
-    submitLogin();
-});
+
+submitLogin();
