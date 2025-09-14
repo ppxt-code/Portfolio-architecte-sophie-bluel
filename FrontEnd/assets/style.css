@@ -251,6 +251,9 @@ nav ul li a {
 	text-decoration: none;
 	color: black;
 }
+a.bolded {
+    font-weight: bold;
+}
 
 /* pour le titre du portefolio */
 #portfolio-header {

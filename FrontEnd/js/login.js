@@ -1,12 +1,13 @@
-import {loadHeader, updateHeaderConnected} from "./script.js"
+import {loadHeader, updateHeaderConnected, removeBoldOnHeaderLinks} from "./script.js"
 
 // envoi du formulaire de login on POST /api/users/login
 function submitLogin() {
-    /*const submit = document.getElementById("submit");
-    submit.addEventListener("click", async (event) => {*/
     const form = document.querySelector("#login form");
     form.addEventListener("submit", async (event) => {
         event.preventDefault();
+        // on enleve les liens du header en gras
+        removeBoldOnHeaderLinks();
+
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
         const response = await fetch("http://localhost:5678/api/users/login", {
