@@ -5,24 +5,25 @@
     </div>
     <nav>Ajout photo</nav>
     <div>
-    <div id="div-add-photo">
-        <img src="./assets/icons/image.png">
-        <div id="button-add-photo">
-            <label for="add-photo">+ Ajouter photo</label>
-            <input type="file" id="add-photo" style="display: none" accept=".jpg,.png"/>
-        </div> 
-        <p>jpg, png : 4mo max</p>
-    </div>   
-    <div id="div-add-photo-infos">
-        <label for="titre">Titre</label>
-	    <input type="text" name="titre" id="titre">
-        <label for="categorie">Catégorie</label>
-        <div class="custom-select">
-            <select id="categorie"></select>
+        <div id="div-add-photo">
+            <img src="./assets/icons/image.png" alt="landscape icon">
+            <div id="button-add-photo">
+                <label for="add-photo">+ Ajouter photo</label>
+                <input type="file" id="add-photo" style="display: none" accept=".jpg,.png">
+            </div>
+            <p>jpg, png : 4mo max</p>
         </div>
-    </div>
-    <hr>
-    <div id="div-add-image">
-        <button id="addImgButton" type="button" class="background-gray" disabled>Valider</button>
+        <div id="div-add-photo-infos">
+            <label for="titre">Titre</label>
+            <input type="text" name="titre" id="titre">
+            <label for="categorie">Catégorie</label>
+            <div class="custom-select">
+                <select id="categorie"></select>
+            </div>
+        </div>
+        <hr>
+        <div id="div-add-image">
+            <button id="addImgButton" type="button" class="background-gray" disabled>Valider</button>
+        </div>
     </div>
 </form>

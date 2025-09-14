@@ -2,6 +2,11 @@
    v2.0 | 20110126
    License: none (public domain)
 */
+:root {
+    --main-red: #B1663C;
+    --main-green: #1D6154;
+}
+
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -68,7 +73,7 @@ h1{
 	font-family: 'Syne';
 	font-size: 22px;
 	font-weight: 800;
-	color: #B1663C
+	color: var(--main-red);
 }
 
 h1 > span {
@@ -82,7 +87,7 @@ h2{
 	font-family: 'Syne';
 	font-weight: 700;
 	font-size: 30px;
-	color: #1D6154
+	color: var(--main-green)
 }
 nav ul {
 	display: flex;
@@ -96,7 +101,7 @@ nav li {
 }
 
 li:hover {
-	color: #B1663C;
+	color:var(--main-red);
 }
 #introduction {
 	display: flex;
@@ -176,7 +181,7 @@ input[type="submit"]{
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
-	background-color: #1D6154;
+	background-color: var(--main-green);
 	margin : 2em auto ;
 	width: 180px;
 	text-align: center;
@@ -197,7 +202,7 @@ footer nav ul {
 	margin-bottom: 50px;
 }
 .category-button {
-	border : 1px solid #1D6154;
+	border : 1px solid var(--main-green);
 	border-radius : 60px;
 	font-family: 'Syne';
 	font-size : 16px;
@@ -207,12 +212,12 @@ footer nav ul {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	color : #1D6154;
+	color : var(--main-green);
 	background-color: white;
 }
 .category-button.clicked {
 	color : white;
-	background-color: #1D6154;
+	background-color: var(--main-green);
 }
 
 /* header */
@@ -337,7 +342,7 @@ nav ul li a {
 }
 #addImgButton {
 	border-radius: 60px;
-	background-color: #1D6154;
+	background-color: var(--main-green);
 	color:white;
 	width: 237px;
 	height: 36px;
