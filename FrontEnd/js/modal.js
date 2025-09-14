@@ -130,40 +130,12 @@ export async function initModal() {
     } else {
         dialog = document.createElement("dialog");
         dialog.id = "modal";
+        document.body.appendChild(dialog);
     }
-    const form = document.createElement("form");
-    form.method = "dialog";
-    // bouton de fermeture
-    const closeDiv = document.createElement("div");
-    closeDiv.id="div-close";
-    const closeButton = document.createElement("i");
-    closeButton.className="fa-solid fa-xmark";
-    closeDiv.appendChild(closeButton)
-    form.appendChild(closeDiv);
-    // titre
-    const title = document.createElement("nav");
-    title.innerText = "Galerie photo";
-    form.appendChild(title);
-    // div pour la galerie dans la modale
-    const divGallery = document.createElement("div");
-    divGallery.classList.add("gallery-for-modal");
-    form.appendChild(divGallery);
-    dialog.appendChild(form);
-    document.body.appendChild(dialog);
+    // insertion de modaleGallery.html
+    await loadmodaleGallery();
     // affichage des projets dans gallery-for-modal
     await displayProjectsForModal();
-    // ligne de séparation
-    const line = document.createElement("hr");
-    form.appendChild(line);
-    // button pour ajouter une image
-    const divaddImg = document.createElement("div");
-    divaddImg.id = "div-add-image";
-    const addImgButton = document.createElement("button");
-    addImgButton.type = "button";
-    addImgButton.id = "addImgButton";
-    addImgButton.innerText = "Ajouter une photo";
-    divaddImg.appendChild(addImgButton);
-    form.appendChild(divaddImg);
     // ajout des evenements 
     addEventOnCloseModal();
     addEventonDelete();
@@ -176,6 +148,13 @@ export async function initModal() {
     document.body.classList.add("backgroundgrey");
 }
 
+// insère modaleGallery.html dans <dialog> de la page dynamiquement
+async function loadmodaleGallery() {
+    const response = await fetch("modaleGallery.html");
+    const data = await response.text();
+    const dialog = document.querySelector("#modal");
+    dialog.innerHTML = data;
+}
 // insère modaleAddPhoto.html dans <dialog> de la page dynamiquement
 async function loadmodaleAddPhoto() {
     const response = await fetch("modaleAddPhoto.html");
