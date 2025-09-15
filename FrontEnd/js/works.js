@@ -1,7 +1,14 @@
+export async function getURL() {
+    const response = await fetch("url.json");
+    const data = await response.json();
+    const url = data.url;
+    return url;
+}
 
 //récupération des projets via l'API
 export async function fetchData(dataname) {
-	const response = await fetch("http://localhost:5678/api"+"/"+dataname);
+    const url= await getURL();
+	const response = await fetch(url+"/"+dataname);
     if (!response.ok) {
         console.error(`Erreur HTTP ! statut: ${response.status} on get ${dataname}`);
         return null;
@@ -17,7 +24,8 @@ export async function deleteData(id) {
         return false;
     }
     let deleted = false;
-    const response = await fetch("http://localhost:5678/api"+"/"+"works/"+id, {
+    const url= await getURL();
+    const response = await fetch(url+"/works/"+id, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
@@ -48,7 +56,8 @@ export async function postData(title, imageUrl, categoryId) {
     formData.append("title", title);
     formData.append("category", categoryIdInt);
   
-    const response = await fetch("http://localhost:5678/api"+"/"+"works", {
+    const url= await getURL();
+    const response = await fetch(url+"/works", {
         method: "POST",
         headers: {
             "Authorization": `Bearer ${token}`

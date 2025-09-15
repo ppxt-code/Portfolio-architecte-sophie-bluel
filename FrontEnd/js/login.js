@@ -1,3 +1,4 @@
+import {getURL} from "./works.js"
 import {removeBoldOnHeaderLinks} from "./script.js"
 
 // envoi du formulaire de login on POST /api/users/login
@@ -10,7 +11,8 @@ function submitLogin() {
 
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
-        const response = await fetch("http://localhost:5678/api/users/login", {
+        const url= await getURL();
+        const response = await fetch(url+"/users/login", {
             method: "POST", 
             headers: {
                 "Content-Type": "application/json"   
