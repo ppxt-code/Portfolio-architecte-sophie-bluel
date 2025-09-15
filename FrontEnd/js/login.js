@@ -41,4 +41,9 @@ async function responseOk(response) {
     window.location.href = "./index.html";
 }
 
+// works.js est importé par modal.js	
+// modal.js est importé par script.js	
+// script.js est importé par login.js	
+
+// initialisation de login.js
 submitLogin();

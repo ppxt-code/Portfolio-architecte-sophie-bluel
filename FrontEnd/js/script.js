@@ -88,6 +88,10 @@ function addEventOnLoad() {
     }
 }
 
+// works.js est importé par modal.js	
+// modal.js est importé par script.js	
+// script.js est importé par login.js	
+	
 // initialisation de script.js
 await loadHeader();
 updateHeaderConnected();

@@ -151,12 +151,12 @@ function removeClickedButtons() {
     });
 }
 
+// works.js est importé par modal.js	
+// modal.js est importé par script.js	
+// script.js est importé par login.js
 
-
+// initialisation de works.js
 await displayCategories();
-
-document.addEventListener('DOMContentLoaded', async () => {
-    if (localStorage.getItem("userId")) {
-        await displayProjects(0);
-    }
-});
+if (localStorage.getItem("userId")) {
+    await displayProjects(0);
+}
