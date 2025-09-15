@@ -166,6 +166,6 @@ function removeClickedButtons() {
 
 // initialisation de works.js
 await displayCategories();
-if (localStorage.getItem("userId")) {
+//if (localStorage.getItem("userId")) {
     await displayProjects(0);
-}
+//}
