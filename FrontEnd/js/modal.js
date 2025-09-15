@@ -28,6 +28,7 @@ function handleCloseClick() {
     document.body.classList.remove("backgroundgrey");
     document.removeEventListener("click", outsideClickListener);
 }
+
 // evenement dans la fenetre modale "Ajout Photo" sur la flèche gauche
 function addEventOnLeftArrow() {
     const leftArrow = document.querySelector(".fa-arrow-left");
@@ -133,7 +134,7 @@ export async function initModal() {
         document.body.appendChild(dialog);
     }
     // insertion de modaleGallery.html
-    await loadmodaleGallery();
+    await loadHtmlInmodale("modaleGallery.html"); 
     // affichage des projets dans gallery-for-modal
     await displayProjectsForModal();
     // ajout des evenements 
@@ -148,16 +149,10 @@ export async function initModal() {
     document.body.classList.add("backgroundgrey");
 }
 
-// insère modaleGallery.html dans <dialog> de la page dynamiquement
-async function loadmodaleGallery() {
-    const response = await fetch("modaleGallery.html");
-    const data = await response.text();
-    const dialog = document.querySelector("#modal");
-    dialog.innerHTML = data;
-}
-// insère modaleAddPhoto.html dans <dialog> de la page dynamiquement
-async function loadmodaleAddPhoto() {
-    const response = await fetch("modaleAddPhoto.html");
+// insère htmlfile dans <dialog> de la page dynamiquement
+async function loadHtmlInmodale(htmlfile)
+{
+    const response = await fetch(htmlfile);
     const data = await response.text();
     const dialog = document.querySelector("#modal");
     dialog.innerHTML = data;
@@ -182,10 +177,14 @@ async function fillCategories() {
 // creation de la fenetre modale "Ajout photo"
 async function initModalPhoto() {
     let dialog = document.querySelector("#modal");
+    if (dialog === null) {
+        console.error("modale mal construite, echec a la recherche de #modal");
+        return;
+    }
     dialog.innerHTML = ""; // on vide
 
     // insertion de modaleAddPhoto.html
-    await loadmodaleAddPhoto();
+    await loadHtmlInmodale("modaleAddPhoto.html");
     // ajout des catégories
     await fillCategories();
 

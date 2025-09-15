@@ -34,7 +34,7 @@ function updateHeaderConnected() {
 function updateProjectsHeaderConnected() {
     if (localStorage.getItem("userId")) {
         let portfolioHeader = document.querySelector("#portfolio-header");
-        if (portfolioHeader == null) return;
+        if (portfolioHeader === null) return; // on n'est pas dans la page index.html
         let aLink = document.createElement("a");
         let iIcon = document.createElement("i");
         iIcon.className = "fa-regular fa-pen-to-square";
@@ -55,7 +55,10 @@ function updateProjectsHeaderConnected() {
 // enleve bold sur les liens du header
 export function removeBoldOnHeaderLinks(){
     const links = document.querySelectorAll("nav ul li a");
-    if (links === null) return;
+    if (links === null) {
+        console.error("liens du header perdus");
+        return;
+    }
     for (const link of links) {
         if (link.classList.contains("bolded")) link.classList.remove("bolded");
     }
@@ -64,6 +67,10 @@ export function removeBoldOnHeaderLinks(){
 // met le lien du header a bold si on clique dessus, enleve bold sur les autre liens
 function addEventOnHeaderLinks() {
     const links = document.querySelectorAll("nav ul li a");
+    if (links === null) {
+        console.error("liens du header perdus");
+        return;
+    }
     for (const link of links) {
         link.addEventListener("click", () => {
             removeBoldOnHeaderLinks();
@@ -81,6 +88,7 @@ function addEventOnLoad() {
     }
 }
 
+// initialisation de script.js
 await loadHeader();
 updateHeaderConnected();
 addEventOnHeaderLinks();

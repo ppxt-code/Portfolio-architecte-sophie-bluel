@@ -9,8 +9,13 @@ export async function fetchData(dataname) {
 	const data = await response.json();
 	return data;
 }
+// delete du projet id via l'API, return true si succes
 export async function deleteData(id) {
     const token = window.localStorage.getItem("token");
+    if (token === null) {
+        console.error("le token de connexion n'est plus dans le localStorage");
+        return false;
+    }
     let deleted = false;
     const response = await fetch("http://localhost:5678/api"+"/"+"works/"+id, {
         method: "DELETE",
@@ -26,11 +31,15 @@ export async function deleteData(id) {
     }
     return deleted;
 }
-// post des images via l'API
+// post d'une image via l'API, return true si succes
 export async function postData(title, imageUrl, categoryId) {
     const token = window.localStorage.getItem("token");
+    if (token === null) {
+        console.error("le token de connexion n'est plus dans le localStorage");
+        return false;
+    }
     const categoryIdInt = parseInt(categoryId, 10);
-    // recuperer une File
+    // recuperer une File à partir de l'URL cree par URL.createObjectURL(file)
     const blob = await fetch(imageUrl).then(res => res.blob());
     const file = new File([blob], "filename.png", { type: blob.type });
 
@@ -54,11 +63,10 @@ export async function postData(title, imageUrl, categoryId) {
     }
 }
 
-
-// affichage dynamique des projets
+// affichage dynamique des projets par catégorie, ou de tous les projets si idCategory<=0
 export async function displayProjects(idCategory) {
     const gallery = document.querySelector(".gallery");
-    if (gallery === null) return;
+    if (gallery === null) return; // on n'est pas dans index.html
     const projects = await fetchData("works");
     gallery.innerHTML = ""; // vider la galerie avant d'ajouter de nouveaux projets
     // filtrer les projets par catégorie si une catégorie est sélectionnée
@@ -76,11 +84,16 @@ export async function displayProjects(idCategory) {
     }
 }
 
+// affichage dynamique des projets pour la fenetre modale
 export async function displayProjectsForModal() {
     const projects = await fetchData("works");
     let gallery = document.querySelector(".gallery-for-modal");
+    if (gallery === null) {
+        console.error("modale mal construite echec de recherche de .gallery-for-modal");
+        return;
+    }
     gallery.innerHTML = ""; // vider la galerie avant d'ajouter de nouveaux projets
-    // filtrer les projets par catégorie si une catégorie est sélectionnée
+    // on rajoute un icone trash bin sur chaque image de projet
     for (const project of projects) {
         const figure = document.createElement("figure");
         const img = document.createElement("img");
@@ -95,11 +108,12 @@ export async function displayProjectsForModal() {
     }
 }
 
+// affichage des boutons de filtre par categorie et du bouton "Tous"
 async function displayCategories() {
     if (localStorage.getItem("userId"))  return;
 
     const categoryDiv = document.querySelector('.categories');
-    if (categoryDiv === null) return;
+    if (categoryDiv === null) return; // on n'est pas dans la fenetre index.html
     const categories = await fetchData("categories");
     categoryDiv.innerHTML = ""; // vider la div avant d'ajouter de nouveaux boutons
     // ajout du bouton "Tous" avec data-id 0
@@ -114,7 +128,7 @@ async function displayCategories() {
         console.log("class" + this.classList);
         await displayProjects(0);
     });
-    // ajout des autres boutons
+    // ajout des autres boutons: un par catégorie
     for (const category of categories) {
         button = document.createElement("button");
         button.textContent = category.name;
@@ -129,7 +143,7 @@ async function displayCategories() {
         });
     }
 }
-
+// on enleve la classe clicked sur tous les boutons de classe category-button 
 function removeClickedButtons() {
     const buttons = document.querySelectorAll(".category-button");
     buttons.forEach(button => {
