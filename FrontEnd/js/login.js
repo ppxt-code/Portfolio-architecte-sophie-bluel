@@ -1,4 +1,4 @@
-import {loadHeader, updateHeaderConnected, removeBoldOnHeaderLinks} from "./script.js"
+import {removeBoldOnHeaderLinks} from "./script.js"
 
 // envoi du formulaire de login on POST /api/users/login
 function submitLogin() {
