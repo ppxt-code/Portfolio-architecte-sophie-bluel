@@ -62,7 +62,7 @@ export function removeBoldOnHeaderLinks(){
     for (const link of links) {
         if (link.classList.contains("bolded")) link.classList.remove("bolded");
     }
-    localStorage.removeItem("selectedLink");
+    sessionStorage.removeItem("selectedLink");
 }
 // met le lien du header a bold si on clique dessus, enleve bold sur les autre liens
 function addEventOnHeaderLinks() {
@@ -75,13 +75,13 @@ function addEventOnHeaderLinks() {
         link.addEventListener("click", () => {
             removeBoldOnHeaderLinks();
             link.classList.add("bolded");
-            localStorage.setItem("selectedLink", link.id);
+            sessionStorage.setItem("selectedLink", link.id);
         });
     }
 }
 // pour remettre a bold le lien du header sur lequel on a cliqué meme si on change de page
 function addEventOnLoad() {
-    const selected = localStorage.getItem("selectedLink");
+    const selected = sessionStorage.getItem("selectedLink");
     if (selected) {
         const link = document.querySelector(`#${selected}`);
         if (link) link.classList.add("bolded");
@@ -91,7 +91,7 @@ function addEventOnLoad() {
 // works.js est importé par modal.js	
 // modal.js est importé par script.js	
 // script.js est importé par login.js	
-	
+
 // initialisation de script.js
 await loadHeader();
 updateHeaderConnected();
