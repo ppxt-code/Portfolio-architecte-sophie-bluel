@@ -17,14 +17,12 @@ function outsideClickListener(event) {
         || y < rect.top || y > rect.bottom);
     if (dialog && isOutside) {//!dialog.contains(event.target)) {
         handleCloseClick();
-        document.removeEventListener("click", outsideClickListener);
     }
 }
 function handleCloseClick() {
     const dialog = document.querySelector("#modal");
     dialog.close();
     dialog.innerHTML="";
-//    document.body.removeChild(dialog);
     document.body.classList.remove("backgroundgrey");
     document.removeEventListener("click", outsideClickListener);
 }
@@ -67,6 +65,7 @@ function addEventOnAddPhoto() {
         if (file && file.size > 4 * 1024 * 1024) { // 4 Mo en octets
             alert("Le fichier ne doit pas dépasser 4 Mo.");
             e.target.value = "";
+            return;
         }
         if (file) {
             const img = document.createElement("img");
