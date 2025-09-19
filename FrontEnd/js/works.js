@@ -85,6 +85,19 @@ export async function displayProjects(idCategory) {
         const img = document.createElement("img");
         img.src = project.imageUrl;
         img.alt = project.title;
+
+        // Attendre la fin de chargement de l'image avant de continuer le rendu
+        // resolve() est appelé quand l’image est complètement chargée (ou si 
+        // elle l’était déjà) ou quand il y a une erreur de chargement.
+        await new Promise((resolve) => {
+            if (img.complete) { // l’image a déjà été complètement chargée
+                resolve();
+            } else {
+                img.onload = () => resolve();
+                img.onerror = () => resolve();
+            }
+        });
+
         const figcaption = document.createElement("figcaption");
         figcaption.textContent = project.title;
         figure.appendChild(img);
@@ -160,6 +173,18 @@ function removeClickedButtons() {
     });
 }
 
+function scrollToHash() {
+    if (window.location.hash) { // ex: #contact
+        const el = document.getElementById(window.location.hash.substring(1)); // ex: contact
+        if (el) {
+            // fait défiler la page pour que l’élément soit visible dans la fenêtre, 
+            // aligné en haut (block: "start") avec un comportement immédiat (pas de défilement 
+            // animé, behavior: "auto").
+            el.scrollIntoView({ behavior: "auto", block: "start" });
+        }
+    }
+}
+
 // works.js est importé par modal.js	
 // modal.js est importé par script.js	
 // script.js est importé par login.js
@@ -169,3 +194,5 @@ await displayCategories();
 //if (localStorage.getItem("userId")) {
     await displayProjects(0);
 //}
+//ex: redirection vers le index#ancre depuis login
+scrollToHash();
